@@ -16,6 +16,7 @@ struct AddBookView: View {
     @State private var rating = 3
     @State private var genre = ""
     @State private var review = ""
+    @State private var date = Date()
     
     let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
@@ -46,6 +47,8 @@ struct AddBookView: View {
                         }
                         
                         let newBook = Book(context: self.moc)
+                        // assign current date here
+                        newBook.date = self.date
                         newBook.title = self.title
                         newBook.author = self.author
                         newBook.rating = Int16(self.rating)

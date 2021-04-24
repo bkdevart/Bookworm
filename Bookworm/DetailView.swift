@@ -15,14 +15,16 @@ struct DetailView: View {
     
     let book: Book
     
+//    Add a new “date” attribute to the Book entity, assigning Date() to it so it gets the current date and time, then format that nicely somewhere in DetailView.
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
                 ZStack(alignment: .bottomTrailing) {
-                    Image(self.book.genre ?? "Fantasy")
+                    Image(self.book.genre ?? "Default")
                         .frame(maxWidth: geometry.size.width)
                     
-                    Text(self.book.genre?.uppercased() ?? "FANTASY")
+                    Text(self.book.genre?.uppercased() ?? "DEFAULT")
                         .font(.caption)
                         .fontWeight(.black)
                         .padding(8)
@@ -42,6 +44,9 @@ struct DetailView: View {
                 RatingView(rating: .constant(Int(self.book.rating)))
                     .font(.largeTitle)
                 
+                Text("Reviewed: \(getPublishDate())")
+                    .padding()
+                    .font(.footnote)
                 Spacer()
             }
         }
@@ -66,6 +71,17 @@ struct DetailView: View {
         
         presentationMode.wrappedValue.dismiss()
     }
+    
+    func getPublishDate() -> String {
+        // create default date if not entered
+        let components = DateComponents(calendar: Calendar.current, timeZone: TimeZone(abbreviation: "MST"), year: 1982, month: 3, day: 30)
+        let defaultDate = components.date
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        let publishDate = (self.book.date ?? defaultDate)!
+        return formatter.string(from: publishDate)
+    }
 }
 
 struct DetailView_Previews: PreviewProvider {
@@ -78,7 +94,7 @@ struct DetailView_Previews: PreviewProvider {
         book.genre = "Fantasy"
         book.rating = 4
         book.review = "This was a great book; I really enjoyed it."
-        
+//        book.date = Date()
         return NavigationView {
             DetailView(book: book)
         }
