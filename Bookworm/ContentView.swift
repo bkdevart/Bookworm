@@ -23,10 +23,11 @@ struct ContentView: View {
                 ForEach(books, id: \.self) { book in NavigationLink(destination: DetailView(book: book)) {
                         EmojiRatingView(rating: book.rating)
                             .font(.largeTitle)
-                        
+//                    Modify ContentView so that books rated as 1 star have their name shown in red.
                         VStack(alignment: .leading) {
                             Text(book.title ?? "Unknown title")
                                 .font(.headline)
+                                .foregroundColor(book.rating < 2 ? .red : .primary)
                             Text(book.author ?? "Unknown author")
                                 .foregroundColor(.secondary)
                         }

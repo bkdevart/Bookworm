@@ -41,7 +41,6 @@ struct AddBookView: View {
                 
                 Section {
                     Button("Save") {
-//                        Right now it’s possible to select no genre for books, which causes a problem for the detail view. Please fix this
                         if self.genre == "" {
                             self.genre = "Default"
                         }
