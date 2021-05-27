@@ -14,9 +14,7 @@ struct DetailView: View {
     @State private var showingDeleteAlert = false
     
     let book: Book
-    
-//    Add a new “date” attribute to the Book entity, assigning Date() to it so it gets the current date and time, then format that nicely somewhere in DetailView.
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -67,7 +65,7 @@ struct DetailView: View {
     func deleteBook() {
         moc.delete(book)
         
-        // try? self.moc.save()
+        try? self.moc.save()
         
         presentationMode.wrappedValue.dismiss()
     }
